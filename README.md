@@ -2,6 +2,6 @@
 LAS PRACTICAS DE ROBOTICA 2025-2 ING. ROBERTO ANGEL GARCIA GARCIA
 
 INTEGRANTES
--
--
--NAHUATLATO JUAREZ WILBERT MIGUEL
+- Martin Santiago Maite Airin
+- Mendez Lopez Valeria Michelle
+- Nahuatlato Juarez Wilbert Miguel
