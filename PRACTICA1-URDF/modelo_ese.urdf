@@ -1,0 +1,181 @@
+<robot name="rrp_robot">
+  <!-- Materiales -->
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+  <material name="blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+  <material name="azulito">
+    <color rgba="0.1608 0.501 0.7255 1"/>
+  </material>
+  <material name="menta">
+    <color rgba="0.0863 0.6274 0.5216 1"/>
+  </material>
+  <material name="blanco">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="gris">
+    <color rgba="0.1803 0.2509 0.3255 1"/>
+  </material>
+
+  <!-- Definición de eslabones -->
+  <link name="world_link"/>
+  
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 1.57"/>
+      <geometry>
+        <cylinder radius="0.25" length="0.10"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+  </link>
+
+  <link name="x_axis">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.4 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="y_axis">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.4 0.05"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <link name="z_axis">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.4"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <link name="shoulder_link">
+    <visual>
+      <origin xyz="0.15 0 0" rpy="0 1.57 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.3"/>
+      </geometry>
+      <material name="menta"/>
+    </visual>
+  </link>
+
+  <link name="arm_link">
+    <visual>
+      <origin xyz="0.15 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.1 0.08"/>
+      </geometry>
+      <material name="azulito"/>
+    </visual>
+  </link>
+
+  <link name="armone_link">
+    <visual>
+      <origin xyz="0 0.2 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.5 0.1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="armtwo_link">
+    <visual>
+      <origin xyz="0 0.2 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.5 0.1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <link name="forearm_link">
+    <visual>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.3"/>
+      </geometry>
+      <material name="blanco"/>
+    </visual>
+  </link>
+
+  <!-- Definición de juntas -->
+  <joint name="world_joint" type="fixed">
+    <parent link="world_link"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="shoulder_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    <origin xyz="0 0 0.1" rpy="0 -1.57 0"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <joint name="x_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="x_axis"/>
+    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="y_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="y_axis"/>
+    <origin xyz="0 0.2 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="z_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="z_axis"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="arm_joint" type="fixed">
+    <parent link="armtwo_link"/>
+    <child link="arm_link"/>
+    <origin xyz="-0.05 0.4 0" rpy="0 0 3.14"/>
+  </joint>
+
+  <joint name="armone_joint" type="revolute">
+    <parent link="shoulder_link"/>
+    <child link="armone_link"/>
+    <origin xyz="0.35 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="20.0" lower="-1.57" upper="1.57" velocity="1.0"/>
+  </joint>
+
+  <joint name="armtwo_joint" type="revolute">
+    <parent link="armone_link"/>
+    <child link="armtwo_link"/>
+    <origin xyz="0.1 0.4 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="15.0" lower="-1.0" upper="1.0" velocity="0.8"/>
+  </joint>
+
+  <joint name="forearm_joint" type="prismatic">
+    <parent link="arm_link"/>
+    <child link="forearm_link"/>
+    <origin xyz="0.3 0 0" rpy="0 1.57 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10.0" lower="-0.29" upper="0" velocity="0.5"/>
+  </joint>
+</robot>
+
